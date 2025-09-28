@@ -2,6 +2,10 @@
 
 A modern, responsive food delivery website built for a professional catering service specializing in office meals, business meetings, and special events in Lahore, Pakistan.
 
+## 🌐 Live Website
+
+**🔗 [View Live Website](https://craving-cuisine.vercel.app/)**
+
 ## 🚀 Project Overview
 
 Craving Cuisine is a comprehensive web solution designed to showcase a professional catering business with interactive features, modern design, and seamless user experience. The website effectively converts visitors into customers through strategic design and functionality.
@@ -60,9 +64,9 @@ Craving Cuisine is a comprehensive web solution designed to showcase a professio
 
 ## 🚀 Deployment
 
-**Live Website**: [Project deployed on Vercel](https://vercel.com)
+**Live Website**: [https://craving-cuisine.vercel.app/](https://craving-cuisine.vercel.app/)
 
-The website is fully deployed and operational, showcasing professional catering services with modern web technologies and responsive design.
+The website is fully deployed and operational on Vercel, showcasing professional catering services with modern web technologies and responsive design.
 
 ## 📊 Project Impact
 
