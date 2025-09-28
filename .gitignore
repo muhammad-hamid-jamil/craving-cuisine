@@ -58,7 +58,7 @@ jspm_packages/
 .yarn-integrity
 
 # Source code (exclude sensitive client code)
-public/
+# public/ - Allow public folder for images
 
 # Keep essential app structure for Next.js
 app/
