@@ -58,8 +58,23 @@ jspm_packages/
 .yarn-integrity
 
 # Source code (exclude sensitive client code)
-app/
 public/
+
+# Keep essential app structure for Next.js
+app/
+!app/layout.tsx
+!app/page.tsx
+!app/globals.css
+!app/components/
+!app/components/Navbar.tsx
+!app/components/Footer.tsx
+!app/about/
+!app/about/page.tsx
+!app/contact/
+!app/contact/page.tsx
+!app/api/
+!app/api/contact/
+!app/api/contact/route.ts
 
 # Keep essential files for deployment
 !package.json
