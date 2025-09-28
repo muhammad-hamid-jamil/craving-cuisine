@@ -1,0 +1,51 @@
+{
+  "name": "craving-cuisine",
+  "version": "1.0.0",
+  "description": "A modern, responsive food delivery website for professional catering services",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/nodemailer": "^6.4.14",
+    "@tailwindcss/postcss": "^4.1.13",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.5.4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "typescript",
+    "food-delivery",
+    "catering",
+    "responsive-design"
+  ],
+  "author": "Hamid Chaudhary",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muhammad-hamid-jamil/craving-cuisine.git"
+  }
+}

@@ -57,17 +57,19 @@ jspm_packages/
 # Yarn Integrity file
 .yarn-integrity
 
-# Source code (exclude everything except README)
+# Source code (exclude sensitive client code)
 app/
 public/
-next.config.ts
-package.json
-package-lock.json
-tailwind.config.js
-postcss.config.js
-tsconfig.json
-next-env.d.ts
-.eslintrc.json
+
+# Keep essential files for deployment
+!package.json
+!package-lock.json
+!next.config.ts
+!tailwind.config.js
+!postcss.config.js
+!tsconfig.json
+!.eslintrc.js
+!.env.example
 
 # Keep only README.md and .gitignore
 !README.md
