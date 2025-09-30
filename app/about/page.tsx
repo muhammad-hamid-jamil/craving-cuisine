@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 export default function About() {
   return (
@@ -31,8 +30,8 @@ export default function About() {
               </p>
               <p className="text-lg text-gray-600 mb-6">
                 What sets us apart is our commitment to freshness and punctuality. We understand 
-                that when you're planning an office lunch or a business meeting, timing is everything. 
-                That's why we've built our entire operation around delivering fresh, hot meals 
+                that when you&apos;re planning an office lunch or a business meeting, timing is everything. 
+                That&apos;s why we&apos;ve built our entire operation around delivering fresh, hot meals 
                 exactly when you need them.
               </p>
               <p className="text-lg text-gray-600">
@@ -107,7 +106,7 @@ export default function About() {
               Why Choose Craving Cuisine?
             </h2>
             <p className="text-xl text-gray-600">
-              Here's what makes us the preferred choice for food delivery in Lahore
+              Here&apos;s what makes us the preferred choice for food delivery in Lahore
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

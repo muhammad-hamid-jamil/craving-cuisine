@@ -13,17 +13,14 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/" className="flex items-center">
               <Image
                 src="/craving-logo.png"
                 alt="Craving Cuisine Logo"
-                width={40}
-                height={40}
-                className="w-10 h-10 object-contain"
+                width={88}
+                height={88}
+                className="w-[5.5rem] h-[5.5rem] object-contain"
               />
-              <span className="text-2xl font-bold text-orange-600">
-                Craving Cuisine
-              </span>
             </Link>
           </div>
 
@@ -32,37 +29,55 @@ export default function Navbar() {
             <div className="ml-10 flex items-baseline space-x-8">
               <Link
                 href="/"
-                className="text-gray-900 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-900 hover:transition-colors px-3 py-2 text-sm font-medium"
+                style={{ '--hover-color': '#d11a5c' } as React.CSSProperties}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Home
               </Link>
-              <a
+              <Link
                 href="/#menu"
-                className="text-gray-900 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-900 hover:transition-colors px-3 py-2 text-sm font-medium"
+                style={{ '--hover-color': '#d11a5c' } as React.CSSProperties}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Menu
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#weekend-deals"
-                className="text-gray-900 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-900 hover:transition-colors px-3 py-2 text-sm font-medium"
+                style={{ '--hover-color': '#d11a5c' } as React.CSSProperties}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Weekend Deals
-              </a>
+              </Link>
               <Link
                 href="/about"
-                className="text-gray-900 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-900 hover:transition-colors px-3 py-2 text-sm font-medium"
+                style={{ '--hover-color': '#d11a5c' } as React.CSSProperties}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-900 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-gray-900 hover:transition-colors px-3 py-2 text-sm font-medium"
+                style={{ '--hover-color': '#d11a5c' } as React.CSSProperties}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Contact
               </Link>
               <a
                 href="tel:+923016828719"
-                className="bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors"
+                className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                style={{ backgroundColor: '#ffa723' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e6951f'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffa723'}
               >
                 Call Now: +92 301 6828719
               </a>
@@ -73,7 +88,9 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-900 hover:text-orange-600 focus:outline-none focus:text-orange-600"
+              className="text-gray-900 focus:outline-none transition-colors"
+              onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMenuOpen ? (
@@ -92,42 +109,55 @@ export default function Navbar() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
               <Link
                 href="/"
-                className="text-gray-900 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className="text-gray-900 block px-3 py-2 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Home
               </Link>
-              <a
+              <Link
                 href="/#menu"
-                className="text-gray-900 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className="text-gray-900 block px-3 py-2 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Menu
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/#weekend-deals"
-                className="text-gray-900 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className="text-gray-900 block px-3 py-2 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Weekend Deals
-              </a>
+              </Link>
               <Link
                 href="/about"
-                className="text-gray-900 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className="text-gray-900 block px-3 py-2 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="text-gray-900 hover:text-orange-600 block px-3 py-2 text-base font-medium transition-colors"
+                className="text-gray-900 block px-3 py-2 text-base font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#d11a5c'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#1f2937'}
               >
                 Contact
               </Link>
               <a
                 href="tel:+923016828719"
-                className="bg-orange-600 text-white block px-3 py-2 text-base font-medium rounded-lg hover:bg-orange-700 transition-colors mx-3 text-center"
+                className="text-white block px-3 py-2 text-base font-medium rounded-lg transition-colors mx-3 text-center"
+                style={{ backgroundColor: '#ffa723' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e6951f'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ffa723'}
               >
                 Call Now: +92 301 6828719
               </a>

@@ -80,12 +80,12 @@ export default function Contact() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-orange-500 to-red-500 py-20">
+      <section className="py-20" style={{ background: 'linear-gradient(to right, #d11a5c, #ffa723)' }}>
         <div className="max-w-4xl mx-auto text-center px-4">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Contact Us
           </h1>
-          <p className="text-xl text-orange-100">
+          <p className="text-xl" style={{ color: '#fef3c7' }}>
             Get in touch for fresh food delivery or custom catering quotes
           </p>
         </div>
@@ -96,20 +96,23 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
             <div className="text-center">
-              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#fef3c7' }}>
                 <span className="text-2xl">📞</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Phone</h3>
               <a
                 href="tel:+923016828719"
-                className="text-orange-600 text-lg hover:text-orange-700 font-medium"
+                className="text-lg font-medium transition-colors"
+                style={{ color: '#d11a5c' }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#ffa723'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#d11a5c'}
               >
                 +92 301 6828719
               </a>
               <p className="text-gray-600 text-sm mt-1">Call for immediate orders</p>
             </div>
             <div className="text-center">
-              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#fef3c7' }}>
                 <span className="text-2xl">📍</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Service Areas</h3>
@@ -118,7 +121,7 @@ export default function Contact() {
               </p>
             </div>
             <div className="text-center">
-              <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#fef3c7' }}>
                 <span className="text-2xl">⏰</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Service Hours</h3>
@@ -139,7 +142,7 @@ export default function Contact() {
               Get a Custom Quote
             </h2>
             <p className="text-xl text-gray-600">
-              Fill out the form below and we'll get back to you with a personalized quote
+              Fill out the form below and we&apos;ll get back to you with a personalized quote
             </p>
           </div>
 
@@ -163,7 +166,16 @@ export default function Contact() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                     placeholder="Your full name"
                   />
                 </div>
@@ -178,7 +190,16 @@ export default function Contact() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                     placeholder="your@email.com"
                   />
                 </div>
@@ -196,7 +217,16 @@ export default function Contact() {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                     placeholder="+92 300 1234567"
                   />
                 </div>
@@ -210,7 +240,16 @@ export default function Contact() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                     placeholder="Your company name"
                   />
                 </div>
@@ -227,7 +266,16 @@ export default function Contact() {
                     required
                     value={formData.eventType}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   >
                     <option value="">Select event type</option>
                     <option value="office-daily">Daily Office Meals</option>
@@ -247,7 +295,16 @@ export default function Contact() {
                     required
                     value={formData.peopleCount}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   >
                     <option value="">Select group size</option>
                     <option value="5-20">5-20 People</option>
@@ -269,7 +326,16 @@ export default function Contact() {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                 />
               </div>
 
@@ -283,7 +349,16 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 transition-colors"
+                    style={{ '--focus-ring-color': '#d11a5c', '--focus-border-color': '#d11a5c' } as React.CSSProperties}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#d11a5c';
+                      e.currentTarget.style.boxShadow = '0 0 0 2px rgba(209, 26, 92, 0.2)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = '#d1d5db';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   placeholder="Tell us about your specific requirements, dietary preferences, budget, or any other details..."
                 ></textarea>
               </div>
@@ -292,7 +367,10 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-orange-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-orange-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ backgroundColor: '#ffa723' }}
+                  onMouseEnter={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#e6951f')}
+                  onMouseLeave={(e) => !e.currentTarget.disabled && (e.currentTarget.style.backgroundColor = '#ffa723')}
                 >
                   {isSubmitting ? 'Submitting...' : 'Get Quote'}
                 </button>
@@ -303,17 +381,20 @@ export default function Contact() {
       </section>
 
       {/* Quick Contact CTA */}
-      <section className="py-16 bg-orange-600">
+      <section className="py-16" style={{ backgroundColor: '#d11a5c' }}>
         <div className="max-w-4xl mx-auto text-center px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Need Immediate Service?
           </h2>
-          <p className="text-xl text-orange-100 mb-8">
+          <p className="text-xl mb-8" style={{ color: '#fef3c7' }}>
             For urgent orders or same-day delivery, call us directly
           </p>
           <a
             href="tel:+923016828719"
-            className="bg-white text-orange-600 px-8 py-4 rounded-lg text-xl font-bold hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
+            className="bg-white px-8 py-4 rounded-lg text-xl font-bold transition-colors inline-flex items-center justify-center"
+            style={{ color: '#d11a5c' }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f3f4f6'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
           >
             📞 Call Now: +92 301 6828719
           </a>
