@@ -29,10 +29,13 @@ export const metadata: Metadata = {
     ],
     shortcut: '/craving-logo.png',
   },
-  // Force fresh deployment
   robots: {
     index: true,
     follow: true,
+  },
+  // Cache busting - Updated: 2025-09-30 12:25
+  other: {
+    'cache-bust': '2025-09-30-12-25',
   },
 };
 
