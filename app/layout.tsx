@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     ],
     shortcut: '/craving-logo.png',
   },
+  // Force fresh deployment
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
