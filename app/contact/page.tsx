@@ -36,7 +36,7 @@ export default function Contact() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || 'YOUR_WEB3FORMS_ACCESS_KEY',
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '69a4067a-c588-4d8d-aee5-dc17f82781bb',
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
