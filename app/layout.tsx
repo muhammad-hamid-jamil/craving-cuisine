@@ -18,6 +18,17 @@ export const metadata: Metadata = {
   title: "Craving Cuisine - Fresh Food Delivery in Lahore",
   description: "Daily fresh food delivery in Lahore. Perfect for offices, meetings & events. Serving Gulberg, Model Town, Garden Town, Johar Town & more areas.",
   keywords: "food delivery, Lahore, fresh food, office catering, events, meetings",
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/craving-logo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/craving-logo.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/craving-logo.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/craving-logo.png',
+  },
 };
 
 export default function RootLayout({

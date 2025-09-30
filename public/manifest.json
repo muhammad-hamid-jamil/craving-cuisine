@@ -1,0 +1,23 @@
+{
+  "name": "Craving Cuisine - Fresh Food Delivery",
+  "short_name": "Craving Cuisine",
+  "description": "Daily fresh food delivery in Lahore. Perfect for offices, meetings & events.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d11a5c",
+  "icons": [
+    {
+      "src": "/craving-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/craving-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
