@@ -10,6 +10,8 @@ import {
   AnimatedCard
 } from "./components/Animations";
 
+// Force rebuild - Updated: 2025-09-30 14:05
+
 const MenuTabs = () => {
   const [activeTab, setActiveTab] = useState('breakfast');
 
