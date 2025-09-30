@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -12,10 +13,19 @@ export default function Footer() {
           {/* Company Info & Logo */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <Link href="/" className="text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors">
-                🍽️ Craving Cuisine
+              <Link href="/" className="flex items-center space-x-3 mb-3">
+                <Image
+                  src="/craving-logo.png"
+                  alt="Craving Cuisine Logo"
+                  width={50}
+                  height={50}
+                  className="w-12 h-12 object-contain"
+                />
+                <span className="text-3xl font-bold text-orange-500 hover:text-orange-400 transition-colors">
+                  Craving Cuisine
+                </span>
               </Link>
-              <p className="text-gray-300 mt-2 text-sm">
+              <p className="text-gray-300 text-sm">
                 Your trusted partner for fresh, delicious food delivery in Lahore
               </p>
             </div>
