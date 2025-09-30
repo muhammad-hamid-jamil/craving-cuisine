@@ -30,15 +30,30 @@ export default function Contact() {
     setSubmitMessage('');
     
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || 'YOUR_WEB3FORMS_ACCESS_KEY',
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          eventType: formData.eventType,
+          peopleCount: formData.peopleCount,
+          date: formData.date,
+          message: formData.message,
+          subject: `New Catering Inquiry from ${formData.name}`,
+          from_name: 'Craving Cuisine Contact Form',
+          replyto: formData.email,
+        }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
         setSubmitMessage('Thank you for your inquiry! We will contact you within 24 hours.');
         // Reset form
         setFormData({
