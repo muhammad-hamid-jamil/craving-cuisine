@@ -69,6 +69,8 @@ app/
 !app/components/Navbar.tsx
 !app/components/Footer.tsx
 !app/components/Animations.tsx
+!app/components/BookingModal.tsx
+!app/components/BookingSlip.tsx
 !app/about/
 !app/about/page.tsx
 !app/contact/
@@ -76,6 +78,10 @@ app/
 !app/api/
 !app/api/contact/
 !app/api/contact/route.ts
+!app/api/booking/
+!app/api/booking/route.ts
+!app/utils/
+!app/utils/pdfGenerator.ts
 
 # Keep essential files for deployment
 !package.json
