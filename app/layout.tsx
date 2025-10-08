@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Cache busting - Updated: 2025-09-30 12:25
+  // Cache busting - Updated: 2025-01-30 13:35
   other: {
-    'cache-bust': '2025-09-30-12-25',
+    'cache-bust': '2025-01-30-13-35',
   },
 };
 
