@@ -8,9 +8,9 @@ import {
   FadeInUp, 
   StaggerContainer, 
   AnimatedCard
-} from "@/app/components/Animations";
-import BookingModal from "@/app/components/BookingModal";
-import BookingSlip from "@/app/components/BookingSlip";
+} from "./components/Animations";
+import BookingModal from "./components/BookingModal";
+import BookingSlip from "./components/BookingSlip";
 
 // Force rebuild - Updated: 2025-09-30 14:05
 
