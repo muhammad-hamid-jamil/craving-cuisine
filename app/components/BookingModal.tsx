@@ -218,33 +218,33 @@ export default function BookingModal({ onClose, onSubmit }: BookingModalProps) {
             
             {/* Progress Bar */}
             <div className="mt-4">
-              <div className="flex items-center justify-center space-x-2">
-                {[1, 2, 3, 4].map((step) => (
+              <div className="flex items-center justify-center">
+                {[
+                  { step: 1, label: 'Details' },
+                  { step: 2, label: 'Event' },
+                  { step: 3, label: 'Location' },
+                  { step: 4, label: 'Menu' }
+                ].map(({ step, label }, index) => (
                   <div key={step} className="flex items-center">
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        step <= currentStep ? 'bg-white text-orange-500' : 'bg-orange-200 text-orange-300'
-                      }`}
-                    >
-                      {step}
-                    </div>
-                    {step < 4 && (
+                    <div className="flex flex-col items-center">
                       <div
-                        className={`w-8 h-1 mx-2 ${
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mb-2 ${
+                          step <= currentStep ? 'bg-white text-orange-500' : 'bg-orange-200 text-orange-300'
+                        }`}
+                      >
+                        {step}
+                      </div>
+                      <span className="text-sm text-white text-center">{label}</span>
+                    </div>
+                    {index < 3 && (
+                      <div
+                        className={`w-8 h-1 mx-4 ${
                           step < currentStep ? 'bg-white' : 'bg-orange-200'
                         }`}
                       />
                     )}
                   </div>
                 ))}
-              </div>
-              <div className="flex justify-center text-sm mt-2">
-                <div className="flex items-center space-x-16">
-                  <span className="w-16 text-center">Details</span>
-                  <span className="w-16 text-center">Event</span>
-                  <span className="w-16 text-center">Location</span>
-                  <span className="w-16 text-center">Menu</span>
-                </div>
               </div>
             </div>
           </div>
