@@ -3,16 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   FadeInUp, 
   StaggerContainer, 
   AnimatedCard
 } from "./components/Animations";
+import BookingModal from "./components/BookingModal";
+import BookingSlip from "./components/BookingSlip";
 
 // Force rebuild - Updated: 2025-09-30 14:05
 
-const MenuTabs = () => {
+const MenuTabs = ({ onBookNow }: { onBookNow: () => void }) => {
   const [activeTab, setActiveTab] = useState('breakfast');
 
   const menuData = {
@@ -189,21 +191,38 @@ const MenuTabs = () => {
                       <h4 className="text-xl font-bold text-gray-900 mb-3">{dish.name}</h4>
                       <p className="text-gray-600 mb-4 line-clamp-2">{dish.description}</p>
                       
-                      {/* Order Button */}
-                      <motion.a
-                        href="tel:+923016828719"
-                        className="w-full text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center justify-center gap-2 group"
-                        style={{ backgroundColor: '#ffa723' }}
-                        whileHover={{ 
-                          scale: 1.02,
-                          backgroundColor: '#e6951f',
-                          transition: { duration: 0.2 }
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        <span>📞</span>
-                        <span className="group-hover:scale-105 transition-transform duration-200">Order Now</span>
-                      </motion.a>
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
+                        <motion.a
+                          href="tel:+923016828719"
+                          className="flex-1 text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center justify-center gap-2 group"
+                          style={{ backgroundColor: '#ffa723' }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            backgroundColor: '#e6951f',
+                            transition: { duration: 0.2 }
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span>📞</span>
+                          <span className="group-hover:scale-105 transition-transform duration-200">Order Now</span>
+                        </motion.a>
+                        
+                        <motion.button
+                          onClick={onBookNow}
+                          className="flex-1 text-white py-3 px-4 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center justify-center gap-2 group"
+                          style={{ backgroundColor: '#d11a5c' }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            backgroundColor: '#b0154a',
+                            transition: { duration: 0.2 }
+                          }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <span>📅</span>
+                          <span className="group-hover:scale-105 transition-transform duration-200">Book Now</span>
+                        </motion.button>
+                      </div>
                     </div>
                   </AnimatedCard>
                 ))}
@@ -537,6 +556,21 @@ const HeroSlider = () => {
 };
 
 export default function Home() {
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showBookingSlip, setShowBookingSlip] = useState(false);
+  const [bookingData, setBookingData] = useState(null);
+
+  const handleBookingSubmit = (data: any) => {
+    setBookingData(data);
+    setShowBookingModal(false);
+    setShowBookingSlip(true);
+  };
+
+  const handleCloseBookingSlip = () => {
+    setShowBookingSlip(false);
+    setBookingData(null);
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -656,7 +690,7 @@ export default function Home() {
           </FadeInUp>
           
           <FadeInUp delay={0.2}>
-            <MenuTabs />
+            <MenuTabs onBookNow={() => setShowBookingModal(true)} />
           </FadeInUp>
         </div>
       </section>
@@ -836,6 +870,26 @@ export default function Home() {
           </FadeInUp>
         </div>
       </section>
+
+      {/* Booking Modal */}
+      <AnimatePresence>
+        {showBookingModal && (
+          <BookingModal
+            onClose={() => setShowBookingModal(false)}
+            onSubmit={handleBookingSubmit}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Booking Slip */}
+      <AnimatePresence>
+        {showBookingSlip && bookingData && (
+          <BookingSlip
+            bookingData={bookingData}
+            onClose={handleCloseBookingSlip}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
