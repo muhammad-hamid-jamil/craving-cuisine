@@ -10,9 +10,23 @@ const packages = {
 export async function POST(request: NextRequest) {
   try {
     const bookingData = await request.json();
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
     
     // Generate booking ID
     const bookingId = `#${Date.now().toString().slice(-6)}`;
+    
+    // If this is a PDF download request, return the PDF directly
+    if (action === 'download') {
+      const pdfBuffer = generatePDFBuffer(bookingData, bookingId);
+      
+      return new NextResponse(pdfBuffer, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': `attachment; filename="craving-cuisine-booking-${bookingId}.pdf"`,
+        },
+      });
+    }
     
     // Prepare email content
     const selectedPackage = packages[bookingData.selectedPackage as keyof typeof packages];

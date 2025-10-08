@@ -2,9 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Users, MapPin, Clock, Phone, Mail, Building, CheckCircle, Download, Share2 } from 'lucide-react';
-import { useState, useRef } from 'react';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { useState } from 'react';
 
 interface BookingSlipProps {
   bookingData: any;
@@ -19,45 +17,38 @@ const packages = {
 
 export default function BookingSlip({ bookingData, onClose }: BookingSlipProps) {
   const [isDownloading, setIsDownloading] = useState(false);
-  const pdfRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
     setIsDownloading(true);
     
     try {
-      if (!pdfRef.current) {
-        throw new Error('PDF content not found');
-      }
-
-      const canvas = await html2canvas(pdfRef.current, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff'
+      const bookingId = `#${Date.now().toString().slice(-6)}`;
+      
+      // Use the server-side PDF generation
+      const response = await fetch('/api/booking?action=download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
       });
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-
-      let position = 0;
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+      if (!response.ok) {
+        throw new Error('Failed to generate PDF');
       }
 
-      const bookingId = `#${Date.now().toString().slice(-6)}`;
-      pdf.save(`craving-cuisine-booking-${bookingId}.pdf`);
+      // Get the PDF blob from the response
+      const pdfBlob = await response.blob();
+      
+      // Create download link
+      const url = window.URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `craving-cuisine-booking-${bookingId}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
       
     } catch (error) {
       console.error('PDF generation failed:', error);
@@ -131,83 +122,6 @@ export default function BookingSlip({ bookingData, onClose }: BookingSlipProps) 
 
           {/* Content */}
           <div className="p-6 max-h-[60vh] overflow-y-auto">
-            {/* PDF Content - Hidden for PDF generation */}
-            <div ref={pdfRef} className="hidden">
-              <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto', padding: '20px', backgroundColor: 'white' }}>
-                {/* Header */}
-                <div style={{ textAlign: 'center', marginBottom: '30px', borderBottom: '3px solid #d11a5c', paddingBottom: '20px' }}>
-                  <h1 style={{ color: '#d11a5c', fontSize: '28px', margin: '0 0 10px 0' }}>🍽️ CRAVING CUISINE</h1>
-                  <h2 style={{ color: '#333', fontSize: '20px', margin: '0 0 5px 0' }}>BOOKING CONFIRMATION</h2>
-                  <p style={{ color: '#666', fontSize: '14px', margin: '0' }}>Booking ID: #{Date.now().toString().slice(-6)} | Date: {new Date().toLocaleDateString()}</p>
-                </div>
-
-                {/* Customer Information */}
-                <div style={{ marginBottom: '25px' }}>
-                  <h3 style={{ color: '#d11a5c', borderBottom: '2px solid #ffa723', paddingBottom: '8px', fontSize: '18px' }}>CUSTOMER INFORMATION</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
-                    <div><strong>Name:</strong> {bookingData.name}</div>
-                    <div><strong>Email:</strong> {bookingData.email}</div>
-                    <div><strong>Phone:</strong> {bookingData.phone}</div>
-                    <div><strong>Company:</strong> {bookingData.company || 'N/A'}</div>
-                  </div>
-                </div>
-
-                {/* Event Details */}
-                <div style={{ marginBottom: '25px' }}>
-                  <h3 style={{ color: '#d11a5c', borderBottom: '2px solid #ffa723', paddingBottom: '8px', fontSize: '18px' }}>EVENT DETAILS</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '15px' }}>
-                    <div><strong>Event Type:</strong> {bookingData.eventType.replace('-', ' ').toUpperCase()}</div>
-                    <div><strong>Date:</strong> {bookingData.eventDate}</div>
-                    <div><strong>Time:</strong> {bookingData.eventTime}</div>
-                    <div><strong>People:</strong> {bookingData.peopleCount}</div>
-                    <div><strong>Package:</strong> {packages[bookingData.selectedPackage as keyof typeof packages]?.name || bookingData.selectedPackage}</div>
-                  </div>
-                </div>
-
-                {/* Delivery Location */}
-                <div style={{ marginBottom: '25px' }}>
-                  <h3 style={{ color: '#d11a5c', borderBottom: '2px solid #ffa723', paddingBottom: '8px', fontSize: '18px' }}>DELIVERY LOCATION</h3>
-                  <div style={{ marginTop: '15px' }}>
-                    <div style={{ marginBottom: '10px' }}><strong>Address:</strong> {bookingData.address}</div>
-                    <div style={{ marginBottom: '10px' }}><strong>Area:</strong> {bookingData.area}</div>
-                    {bookingData.deliveryInstructions && (
-                      <div><strong>Instructions:</strong> {bookingData.deliveryInstructions}</div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Selected Menu Items */}
-                <div style={{ marginBottom: '25px' }}>
-                  <h3 style={{ color: '#d11a5c', borderBottom: '2px solid #ffa723', paddingBottom: '8px', fontSize: '18px' }}>SELECTED MENU ITEMS</h3>
-                  <div style={{ marginTop: '15px' }}>
-                    {bookingData.selectedMenuItems.map((item: string, index: number) => (
-                      <div key={index} style={{ padding: '5px 0', borderBottom: '1px solid #eee' }}>
-                        • {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Special Requirements */}
-                {bookingData.specialRequirements && (
-                  <div style={{ marginBottom: '25px' }}>
-                    <h3 style={{ color: '#d11a5c', borderBottom: '2px solid #ffa723', paddingBottom: '8px', fontSize: '18px' }}>SPECIAL REQUIREMENTS</h3>
-                    <div style={{ marginTop: '15px' }}>{bookingData.specialRequirements}</div>
-                  </div>
-                )}
-
-                {/* Footer */}
-                <div style={{ textAlign: 'center', marginTop: '30px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
-                  <h3 style={{ color: '#d11a5c', marginBottom: '15px' }}>CONTACT INFORMATION</h3>
-                  <div style={{ marginBottom: '10px' }}><strong>Phone:</strong> +92 301 6828719</div>
-                  <div style={{ marginBottom: '20px' }}><strong>Email:</strong> muhammadhamidofficial0@gmail.com</div>
-                  <p style={{ color: '#666', fontSize: '14px', margin: '0' }}>
-                    Thank you for choosing Craving Cuisine!<br/>
-                    We'll contact you within 24 hours to confirm final details.
-                  </p>
-                </div>
-              </div>
-            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               
               {/* Left Column */}
