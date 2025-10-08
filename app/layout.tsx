@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import StructuredData from "./components/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +16,43 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Craving Cuisine - Fresh Food Delivery in Lahore",
-  description: "Daily fresh food delivery in Lahore. Perfect for offices, meetings & events. Serving Gulberg, Model Town, Garden Town, Johar Town & more areas.",
-  keywords: "food delivery, Lahore, fresh food, office catering, events, meetings",
+  title: "Craving Cuisine - Fresh Food Delivery in Lahore | Office Catering & Events",
+  description: "Premium food delivery service in Lahore. Fresh daily meals for offices, meetings, conferences & events. Serving Gulberg, Model Town, Garden Town, Johar Town, DHA & all major areas. Book online now!",
+  keywords: "food delivery Lahore, office catering Lahore, fresh food delivery, corporate catering, event catering, meeting catering, conference catering, daily meals Lahore, Gulberg food delivery, Model Town catering, Garden Town food, Johar Town delivery, DHA catering, business lunch Lahore",
+  authors: [{ name: "Craving Cuisine" }],
+  creator: "Craving Cuisine",
+  publisher: "Craving Cuisine",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://craving-cuisine.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Craving Cuisine - Fresh Food Delivery in Lahore",
+    description: "Premium food delivery service in Lahore. Fresh daily meals for offices, meetings & events. Book online now!",
+    url: 'https://craving-cuisine.vercel.app',
+    siteName: 'Craving Cuisine',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Craving Cuisine - Fresh Food Delivery in Lahore',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Craving Cuisine - Fresh Food Delivery in Lahore",
+    description: "Premium food delivery service in Lahore. Fresh daily meals for offices, meetings & events.",
+    images: ['/og-image.jpg'],
+  },
   manifest: '/manifest.json',
   icons: {
     icon: [
@@ -37,10 +72,16 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
-  // Cache busting - Updated: 2025-01-30 13:35
-  other: {
-    'cache-bust': '2025-01-30-13-35',
+  verification: {
+    google: 'your-google-verification-code',
   },
 };
 
@@ -51,6 +92,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <StructuredData />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
