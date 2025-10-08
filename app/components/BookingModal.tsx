@@ -238,11 +238,13 @@ export default function BookingModal({ onClose, onSubmit }: BookingModalProps) {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-center space-x-16 text-sm mt-2">
-                <span>Details</span>
-                <span>Event</span>
-                <span>Location</span>
-                <span>Menu</span>
+              <div className="flex justify-center text-sm mt-2">
+                <div className="flex items-center space-x-16">
+                  <span className="w-16 text-center">Details</span>
+                  <span className="w-16 text-center">Event</span>
+                  <span className="w-16 text-center">Location</span>
+                  <span className="w-16 text-center">Menu</span>
+                </div>
               </div>
             </div>
           </div>
