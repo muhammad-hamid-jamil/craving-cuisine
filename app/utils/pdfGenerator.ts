@@ -12,14 +12,14 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   let yPosition = 20;
 
   // Helper function to add text
-  const addText = (text: string, x: number, y: number, fontSize: number = 12, isBold: boolean = false) => {
+  const addText = (text: string, x: number, y: number, fontSize: number = 12, isBold: boolean = false, align: 'left' | 'center' | 'right' = 'left') => {
     pdf.setFontSize(fontSize);
     if (isBold) {
       pdf.setFont('helvetica', 'bold');
     } else {
       pdf.setFont('helvetica', 'normal');
     }
-    pdf.text(text, x, y);
+    pdf.text(text, x, y, { align });
     return y + fontSize * 0.4;
   };
 
@@ -39,7 +39,7 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   };
 
   // Title
-  addText('CRAVING CUISINE - BOOKING CONFIRMATION', pageWidth / 2, yPosition, 16, true);
+  addText('CRAVING CUISINE - BOOKING CONFIRMATION', pageWidth / 2, yPosition, 16, true, 'center');
   yPosition += 15;
 
   // Booking ID
@@ -127,11 +127,11 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
 
   // Footer
   yPosition += 20;
-  addText('Thank you for choosing Craving Cuisine!', pageWidth / 2, yPosition, 10, true);
+  addText('Thank you for choosing Craving Cuisine!', pageWidth / 2, yPosition, 10, true, 'center');
   yPosition += 5;
-  addText('Contact: +92 301 6828719', pageWidth / 2, yPosition, 9);
+  addText('Contact: +92 301 6828719', pageWidth / 2, yPosition, 9, false, 'center');
   yPosition += 5;
-  addText('Email: muhammadhamidofficial0@gmail.com', pageWidth / 2, yPosition, 9);
+  addText('Email: muhammadhamidofficial0@gmail.com', pageWidth / 2, yPosition, 9, false, 'center');
 
   return pdf;
 };
