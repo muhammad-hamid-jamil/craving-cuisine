@@ -86,25 +86,53 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
 
   yPosition += 65;
 
+  // Helper function to add table
+  const addTable = (data: Array<{label: string, value: string}>, x: number, y: number, width: number) => {
+    const rowHeight = 8;
+    const cellPadding = 3;
+    
+    // Table header background
+    pdf.setFillColor(245, 245, 245);
+    pdf.rect(x, y, width, rowHeight, 'F');
+    
+    // Table border
+    pdf.setDrawColor(200, 200, 200);
+    pdf.setLineWidth(0.3);
+    pdf.rect(x, y, width, data.length * rowHeight, 'S');
+    
+    data.forEach((row, index) => {
+      const currentY = y + (index * rowHeight);
+      
+      // Row separator
+      if (index > 0) {
+        pdf.line(x, currentY, x + width, currentY);
+      }
+      
+      // Label (left column)
+      addText(row.label, x + cellPadding, currentY + 6, width * 0.4, 10, '#333333', true);
+      
+      // Value (right column)
+      addText(row.value, x + (width * 0.4) + cellPadding, currentY + 6, width * 0.6 - cellPadding, 10, '#666666');
+    });
+    
+    return y + (data.length * rowHeight);
+  };
+
   // Event Details Section
   addCircle(35, yPosition + 8, 4, '#ffa723');
   addText('Event Details', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
   yPosition += 25;
 
   const selectedPackage = packages[bookingData.selectedPackage as keyof typeof packages];
-  const eventInfo = [
-    `Event Type: ${bookingData.eventType.replace('-', ' ').toUpperCase()}`,
-    `Date: ${bookingData.eventDate}`,
-    `Time: ${bookingData.eventTime}`,
-    `People: ${bookingData.peopleCount}`,
-    `Package: ${selectedPackage?.name || bookingData.selectedPackage}`
+  const eventData = [
+    { label: 'Event Type', value: bookingData.eventType.replace('-', ' ').toUpperCase() },
+    { label: 'Date', value: bookingData.eventDate },
+    { label: 'Time', value: bookingData.eventTime },
+    { label: 'People', value: bookingData.peopleCount },
+    { label: 'Package', value: selectedPackage?.name || bookingData.selectedPackage }
   ];
 
-  eventInfo.forEach(info => {
-    yPosition = addText(info, 45, yPosition, pageWidth - 70, 11, '#666666');
-    yPosition += 6;
-  });
-
+  yPosition = addTable(eventData, 45, yPosition, pageWidth - 70);
   yPosition += 15;
   addSectionDivider(yPosition);
   yPosition += 15;
@@ -114,16 +142,16 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   addText('Delivery Location', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
   yPosition += 25;
 
-  yPosition = addText(`Address: ${bookingData.address}`, 45, yPosition, pageWidth - 70, 11, '#666666');
-  yPosition += 8;
-  yPosition = addText(`Area: ${bookingData.area}`, 45, yPosition, pageWidth - 70, 11, '#666666');
-  yPosition += 8;
+  const locationData = [
+    { label: 'Address', value: bookingData.address },
+    { label: 'Area', value: bookingData.area }
+  ];
 
   if (bookingData.deliveryInstructions) {
-    yPosition = addText(`Instructions: ${bookingData.deliveryInstructions}`, 45, yPosition, pageWidth - 70, 11, '#666666');
-    yPosition += 8;
+    locationData.push({ label: 'Instructions', value: bookingData.deliveryInstructions });
   }
 
+  yPosition = addTable(locationData, 45, yPosition, pageWidth - 70);
   yPosition += 15;
   addSectionDivider(yPosition);
   yPosition += 15;
@@ -133,11 +161,12 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   addText('Selected Menu Items', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
   yPosition += 25;
 
-  bookingData.selectedMenuItems.forEach((item: string) => {
-    yPosition = addText(`• ${item}`, 45, yPosition, pageWidth - 70, 11, '#666666');
-    yPosition += 6;
-  });
+  const menuData = bookingData.selectedMenuItems.map((item: string, index: number) => ({
+    label: `Item ${index + 1}`,
+    value: item
+  }));
 
+  yPosition = addTable(menuData, 45, yPosition, pageWidth - 70);
   yPosition += 15;
 
   // Budget Range Section
@@ -147,8 +176,13 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
     addCircle(35, yPosition + 8, 4, '#ffa723');
     addText('Budget Range', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
     yPosition += 25;
-    yPosition = addText(bookingData.budget.replace('-', ' - ').toUpperCase(), 45, yPosition, pageWidth - 70, 11, '#666666');
-    yPosition += 20;
+    
+    const budgetData = [
+      { label: 'Budget Range', value: bookingData.budget.replace('-', ' - ').toUpperCase() }
+    ];
+    
+    yPosition = addTable(budgetData, 45, yPosition, pageWidth - 70);
+    yPosition += 15;
   }
 
   // Special Requirements Section
@@ -158,8 +192,13 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
     addCircle(35, yPosition + 8, 4, '#ffa723');
     addText('Special Requirements', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
     yPosition += 25;
-    yPosition = addText(bookingData.specialRequirements, 45, yPosition, pageWidth - 70, 11, '#666666');
-    yPosition += 20;
+    
+    const requirementsData = [
+      { label: 'Requirements', value: bookingData.specialRequirements }
+    ];
+    
+    yPosition = addTable(requirementsData, 45, yPosition, pageWidth - 70);
+    yPosition += 15;
   }
 
   // Footer Notes with better styling
