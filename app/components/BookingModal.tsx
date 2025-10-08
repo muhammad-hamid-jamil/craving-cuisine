@@ -218,7 +218,7 @@ export default function BookingModal({ onClose, onSubmit }: BookingModalProps) {
             
             {/* Progress Bar */}
             <div className="mt-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center justify-center space-x-2">
                 {[1, 2, 3, 4].map((step) => (
                   <div key={step} className="flex items-center">
                     <div
@@ -238,7 +238,7 @@ export default function BookingModal({ onClose, onSubmit }: BookingModalProps) {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between text-sm mt-2">
+              <div className="flex justify-center space-x-16 text-sm mt-2">
                 <span>Details</span>
                 <span>Event</span>
                 <span>Location</span>
