@@ -1,11 +1,12 @@
 {
   "name": "craving-cuisine",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A modern, responsive food delivery website for professional catering services",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:clean": "rm -rf .next && next build",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit"
