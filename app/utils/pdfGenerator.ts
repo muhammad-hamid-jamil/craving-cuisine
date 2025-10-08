@@ -9,120 +9,68 @@ const packages = {
 export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = 210;
-  const pageHeight = 297;
-  let yPosition = 15;
+  let yPosition = 20;
 
-  // Helper function to add text with proper alignment
-  const addText = (text: string, x: number, y: number, maxWidth: number, fontSize: number = 12, color: string = '#000000', isBold: boolean = false, align: 'left' | 'center' | 'right' = 'left') => {
+  // Helper function to add text
+  const addText = (text: string, x: number, y: number, fontSize: number = 12, isBold: boolean = false) => {
     pdf.setFontSize(fontSize);
-    pdf.setTextColor(color);
     if (isBold) {
       pdf.setFont('helvetica', 'bold');
     } else {
       pdf.setFont('helvetica', 'normal');
     }
+    pdf.text(text, x, y);
+    return y + fontSize * 0.4;
+  };
+
+  // Helper function to add simple table
+  const addSimpleTable = (data: Array<{label: string, value: string}>, x: number, y: number) => {
+    let currentY = y;
     
-    const lines = pdf.splitTextToSize(text, maxWidth);
-    pdf.text(lines, x, y, { align });
-    return y + (lines.length * fontSize * 0.4);
+    data.forEach((row) => {
+      // Label
+      addText(row.label + ':', x, currentY, 10, true);
+      // Value
+      addText(row.value, x + 60, currentY, 10, false);
+      currentY += 6;
+    });
+    
+    return currentY;
   };
 
-  // Helper function to add circle
-  const addCircle = (x: number, y: number, radius: number, fillColor: string) => {
-    pdf.setFillColor(fillColor);
-    pdf.circle(x, y, radius, 'F');
-  };
+  // Title
+  addText('CRAVING CUISINE - BOOKING CONFIRMATION', pageWidth / 2, yPosition, 16, true);
+  yPosition += 15;
 
-  // Helper function to add rounded rectangle
-  const addRoundedRect = (x: number, y: number, width: number, height: number, radius: number, fillColor: string, strokeColor?: string) => {
-    if (fillColor) {
-      pdf.setFillColor(fillColor);
-      pdf.roundedRect(x, y, width, height, radius, radius, 'F');
-    }
-    if (strokeColor) {
-      pdf.setDrawColor(strokeColor);
-      pdf.setLineWidth(0.5);
-      pdf.roundedRect(x, y, width, height, radius, radius, 'S');
-    }
-  };
+  // Booking ID
+  addText(`Booking ID: ${bookingId}`, 20, yPosition, 12, true);
+  yPosition += 10;
 
-  // Helper function to add section divider
-  const addSectionDivider = (y: number) => {
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.3);
-    pdf.line(25, y, pageWidth - 25, y);
-  };
-
-  // Date and Time at top right
+  // Date
   const currentDate = new Date();
   const dateStr = currentDate.toLocaleDateString('en-GB');
   const timeStr = currentDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  addText(`${dateStr}, ${timeStr}`, pageWidth - 20, 20, 50, 10, '#666666', false, 'right');
+  addText(`Date: ${dateStr} ${timeStr}`, 20, yPosition, 10);
+  yPosition += 15;
 
-  // Company Name centered
-  addText('Craving Cuisine - Fresh Food Delivery in Lahore', pageWidth / 2, 35, pageWidth - 40, 18, '#d11a5c', true, 'center');
+  // Customer Details
+  addText('CUSTOMER DETAILS', 20, yPosition, 12, true);
+  yPosition += 8;
   
-  yPosition = 50;
-
-  // Main Card Background with shadow effect
-  addRoundedRect(20, yPosition, pageWidth - 40, pageHeight - yPosition - 30, 12, '#ffffff', '#e5e7eb');
-
-  yPosition += 30;
-
-  // Header Section with Pink Background
-  addRoundedRect(25, yPosition, pageWidth - 50, 50, 8, '#d11a5c');
+  const customerData = [
+    { label: 'Name', value: bookingData.name },
+    { label: 'Email', value: bookingData.email },
+    { label: 'Phone', value: bookingData.phone },
+    { label: 'Company', value: bookingData.company || 'N/A' }
+  ];
   
-  // Booking Confirmed text
-  addText('Booking Confirmed!', pageWidth / 2, yPosition + 20, pageWidth - 50, 20, '#ffffff', true, 'center');
-  addText('Your catering service has been reserved', pageWidth / 2, yPosition + 28, pageWidth - 50, 11, '#ffffff', false, 'center');
+  yPosition = addSimpleTable(customerData, 20, yPosition);
+  yPosition += 10;
+
+  // Event Details
+  addText('EVENT DETAILS', 20, yPosition, 12, true);
+  yPosition += 8;
   
-  // Booking ID on left
-  addText('Booking ID', 30, yPosition + 40, 60, 9, '#ffffff');
-  addText(bookingId, 30, yPosition + 44, 60, 14, '#ffffff', true);
-  
-  // Email on right
-  addText('Confirmation Email Sent', pageWidth - 90, yPosition + 40, 60, 9, '#ffffff', false, 'right');
-  addText(bookingData.email, pageWidth - 90, yPosition + 44, 60, 11, '#ffffff', true, 'right');
-
-  yPosition += 65;
-
-  // Helper function to add table
-  const addTable = (data: Array<{label: string, value: string}>, x: number, y: number, width: number) => {
-    const rowHeight = 8;
-    const cellPadding = 3;
-    
-    // Table header background
-    pdf.setFillColor(245, 245, 245);
-    pdf.rect(x, y, width, rowHeight, 'F');
-    
-    // Table border
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.3);
-    pdf.rect(x, y, width, data.length * rowHeight, 'S');
-    
-    data.forEach((row, index) => {
-      const currentY = y + (index * rowHeight);
-      
-      // Row separator
-      if (index > 0) {
-        pdf.line(x, currentY, x + width, currentY);
-      }
-      
-      // Label (left column)
-      addText(row.label, x + cellPadding, currentY + 6, width * 0.4, 10, '#333333', true);
-      
-      // Value (right column)
-      addText(row.value, x + (width * 0.4) + cellPadding, currentY + 6, width * 0.6 - cellPadding, 10, '#666666');
-    });
-    
-    return y + (data.length * rowHeight);
-  };
-
-  // Event Details Section
-  addCircle(35, yPosition + 8, 4, '#ffa723');
-  addText('Event Details', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
-  yPosition += 25;
-
   const selectedPackage = packages[bookingData.selectedPackage as keyof typeof packages];
   const eventData = [
     { label: 'Event Type', value: bookingData.eventType.replace('-', ' ').toUpperCase() },
@@ -131,83 +79,59 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
     { label: 'People', value: bookingData.peopleCount },
     { label: 'Package', value: selectedPackage?.name || bookingData.selectedPackage }
   ];
+  
+  yPosition = addSimpleTable(eventData, 20, yPosition);
+  yPosition += 10;
 
-  yPosition = addTable(eventData, 45, yPosition, pageWidth - 70);
-  yPosition += 15;
-  addSectionDivider(yPosition);
-  yPosition += 15;
-
-  // Delivery Location Section
-  addCircle(35, yPosition + 8, 4, '#ffa723');
-  addText('Delivery Location', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
-  yPosition += 25;
-
+  // Delivery Location
+  addText('DELIVERY LOCATION', 20, yPosition, 12, true);
+  yPosition += 8;
+  
   const locationData = [
     { label: 'Address', value: bookingData.address },
     { label: 'Area', value: bookingData.area }
   ];
-
+  
   if (bookingData.deliveryInstructions) {
     locationData.push({ label: 'Instructions', value: bookingData.deliveryInstructions });
   }
-
-  yPosition = addTable(locationData, 45, yPosition, pageWidth - 70);
-  yPosition += 15;
-  addSectionDivider(yPosition);
-  yPosition += 15;
-
-  // Selected Menu Items Section
-  addCircle(35, yPosition + 8, 4, '#ffa723');
-  addText('Selected Menu Items', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
-  yPosition += 25;
-
-  const menuData = bookingData.selectedMenuItems.map((item: string, index: number) => ({
-    label: `Item ${index + 1}`,
-    value: item
-  }));
-
-  yPosition = addTable(menuData, 45, yPosition, pageWidth - 70);
-  yPosition += 15;
-
-  // Budget Range Section
-  if (bookingData.budget) {
-    addSectionDivider(yPosition);
-    yPosition += 15;
-    addCircle(35, yPosition + 8, 4, '#ffa723');
-    addText('Budget Range', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
-    yPosition += 25;
-    
-    const budgetData = [
-      { label: 'Budget Range', value: bookingData.budget.replace('-', ' - ').toUpperCase() }
-    ];
-    
-    yPosition = addTable(budgetData, 45, yPosition, pageWidth - 70);
-    yPosition += 15;
-  }
-
-  // Special Requirements Section
-  if (bookingData.specialRequirements) {
-    addSectionDivider(yPosition);
-    yPosition += 15;
-    addCircle(35, yPosition + 8, 4, '#ffa723');
-    addText('Special Requirements', 45, yPosition + 10, pageWidth - 70, 14, '#333333', true);
-    yPosition += 25;
-    
-    const requirementsData = [
-      { label: 'Requirements', value: bookingData.specialRequirements }
-    ];
-    
-    yPosition = addTable(requirementsData, 45, yPosition, pageWidth - 70);
-    yPosition += 15;
-  }
-
-  // Footer Notes with better styling
-  yPosition = pageHeight - 50;
-  addSectionDivider(yPosition);
-  yPosition += 15;
   
-  addText('Confirmation emails sent to you and our team', pageWidth / 2, yPosition, pageWidth - 40, 9, '#666666', false, 'center');
-  addText('Booking valid for 7 days from confirmation', pageWidth / 2, yPosition + 8, pageWidth - 40, 9, '#666666', false, 'center');
+  yPosition = addSimpleTable(locationData, 20, yPosition);
+  yPosition += 10;
+
+  // Menu Items
+  addText('SELECTED MENU ITEMS', 20, yPosition, 12, true);
+  yPosition += 8;
+  
+  bookingData.selectedMenuItems.forEach((item: string, index: number) => {
+    addText(`${index + 1}. ${item}`, 20, yPosition, 10);
+    yPosition += 5;
+  });
+  yPosition += 5;
+
+  // Budget
+  if (bookingData.budget) {
+    addText('BUDGET RANGE', 20, yPosition, 12, true);
+    yPosition += 8;
+    addText(bookingData.budget.replace('-', ' - ').toUpperCase(), 20, yPosition, 10);
+    yPosition += 10;
+  }
+
+  // Special Requirements
+  if (bookingData.specialRequirements) {
+    addText('SPECIAL REQUIREMENTS', 20, yPosition, 12, true);
+    yPosition += 8;
+    addText(bookingData.specialRequirements, 20, yPosition, 10);
+    yPosition += 10;
+  }
+
+  // Footer
+  yPosition += 20;
+  addText('Thank you for choosing Craving Cuisine!', pageWidth / 2, yPosition, 10, true);
+  yPosition += 5;
+  addText('Contact: +92 301 6828719', pageWidth / 2, yPosition, 9);
+  yPosition += 5;
+  addText('Email: muhammadhamidofficial0@gmail.com', pageWidth / 2, yPosition, 9);
 
   return pdf;
 };
