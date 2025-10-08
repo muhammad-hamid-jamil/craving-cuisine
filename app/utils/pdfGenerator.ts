@@ -10,7 +10,7 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   const pdf = new jsPDF('p', 'mm', 'a4');
   const pageWidth = 210;
   const pageHeight = 297;
-  let yPosition = 15;
+  let yPosition = 20;
 
   // Helper function to add text with proper alignment
   const addText = (text: string, x: number, y: number, maxWidth: number, fontSize: number = 12, color: string = '#000000', isBold: boolean = false, align: 'left' | 'center' | 'right' = 'left') => {
@@ -24,7 +24,7 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
     
     const lines = pdf.splitTextToSize(text, maxWidth);
     pdf.text(lines, x, y, { align });
-    return y + (lines.length * fontSize * 0.4);
+    return y + (lines.length * fontSize * 0.35);
   };
 
   // Helper function to add circle
@@ -50,39 +50,39 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   const currentDate = new Date();
   const dateStr = currentDate.toLocaleDateString('en-GB');
   const timeStr = currentDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  addText(`${dateStr}, ${timeStr}`, pageWidth - 20, 15, 50, 10, '#666666', false, 'right');
+  addText(`${dateStr}, ${timeStr}`, pageWidth - 20, 20, 50, 10, '#666666', false, 'right');
 
   // Company Name centered
-  addText('Craving Cuisine - Fresh Food Delivery in Lahore', pageWidth / 2, 25, pageWidth - 40, 16, '#d11a5c', true, 'center');
+  addText('Craving Cuisine - Fresh Food Delivery in Lahore', pageWidth / 2, 35, pageWidth - 40, 16, '#d11a5c', true, 'center');
   
-  yPosition = 35;
+  yPosition = 50;
 
   // Main Card Background
-  addRoundedRect(15, yPosition, pageWidth - 30, pageHeight - yPosition - 20, 8, '#ffffff', '#e5e7eb');
+  addRoundedRect(20, yPosition, pageWidth - 40, pageHeight - yPosition - 30, 8, '#ffffff', '#e5e7eb');
 
-  yPosition += 20;
+  yPosition += 25;
 
   // Header Section with Pink Background
-  addRoundedRect(20, yPosition, pageWidth - 40, 40, 6, '#d11a5c');
+  addRoundedRect(25, yPosition, pageWidth - 50, 45, 6, '#d11a5c');
   
   // Booking Confirmed text
-  addText('Booking Confirmed!', pageWidth / 2, yPosition + 15, pageWidth - 40, 18, '#ffffff', true, 'center');
-  addText('Your catering service has been reserved', pageWidth / 2, yPosition + 22, pageWidth - 40, 10, '#ffffff', false, 'center');
+  addText('Booking Confirmed!', pageWidth / 2, yPosition + 18, pageWidth - 50, 18, '#ffffff', true, 'center');
+  addText('Your catering service has been reserved', pageWidth / 2, yPosition + 25, pageWidth - 50, 10, '#ffffff', false, 'center');
   
   // Booking ID on left
-  addText('Booking ID', 25, yPosition + 30, 50, 8, '#ffffff');
-  addText(bookingId, 25, yPosition + 33, 50, 12, '#ffffff', true);
+  addText('Booking ID', 30, yPosition + 35, 60, 8, '#ffffff');
+  addText(bookingId, 30, yPosition + 38, 60, 12, '#ffffff', true);
   
   // Email on right
-  addText('Confirmation Email Sent', pageWidth - 80, yPosition + 30, 50, 8, '#ffffff', false, 'right');
-  addText(bookingData.email, pageWidth - 80, yPosition + 33, 50, 10, '#ffffff', true, 'right');
+  addText('Confirmation Email Sent', pageWidth - 85, yPosition + 35, 60, 8, '#ffffff', false, 'right');
+  addText(bookingData.email, pageWidth - 85, yPosition + 38, 60, 10, '#ffffff', true, 'right');
 
-  yPosition += 55;
+  yPosition += 60;
 
   // Event Details Section
-  addCircle(30, yPosition + 8, 3, '#ffa723');
-  addText('Event Details', 40, yPosition + 10, pageWidth - 60, 12, '#333333', true);
-  yPosition += 20;
+  addCircle(35, yPosition + 8, 3, '#ffa723');
+  addText('Event Details', 45, yPosition + 10, pageWidth - 70, 12, '#333333', true);
+  yPosition += 25;
 
   const selectedPackage = packages[bookingData.selectedPackage as keyof typeof packages];
   const eventInfo = [
@@ -94,61 +94,61 @@ export const generateBookingPDF = (bookingData: any, bookingId: string) => {
   ];
 
   eventInfo.forEach(info => {
-    yPosition = addText(info, 40, yPosition, pageWidth - 60, 10, '#666666');
-    yPosition += 4;
+    yPosition = addText(info, 45, yPosition, pageWidth - 70, 10, '#666666');
+    yPosition += 5;
   });
 
-  yPosition += 15;
+  yPosition += 20;
 
   // Delivery Location Section
-  addCircle(30, yPosition + 8, 3, '#ffa723');
-  addText('Delivery Location', 40, yPosition + 10, pageWidth - 60, 12, '#333333', true);
-  yPosition += 20;
+  addCircle(35, yPosition + 8, 3, '#ffa723');
+  addText('Delivery Location', 45, yPosition + 10, pageWidth - 70, 12, '#333333', true);
+  yPosition += 25;
 
-  yPosition = addText(`Address: ${bookingData.address}`, 40, yPosition, pageWidth - 60, 10, '#666666');
-  yPosition += 6;
-  yPosition = addText(`Area: ${bookingData.area}`, 40, yPosition, pageWidth - 60, 10, '#666666');
-  yPosition += 6;
+  yPosition = addText(`Address: ${bookingData.address}`, 45, yPosition, pageWidth - 70, 10, '#666666');
+  yPosition += 7;
+  yPosition = addText(`Area: ${bookingData.area}`, 45, yPosition, pageWidth - 70, 10, '#666666');
+  yPosition += 7;
 
   if (bookingData.deliveryInstructions) {
-    yPosition = addText(`Instructions: ${bookingData.deliveryInstructions}`, 40, yPosition, pageWidth - 60, 10, '#666666');
-    yPosition += 6;
+    yPosition = addText(`Instructions: ${bookingData.deliveryInstructions}`, 45, yPosition, pageWidth - 70, 10, '#666666');
+    yPosition += 7;
   }
 
-  yPosition += 15;
-
-  // Selected Menu Items Section
-  addCircle(30, yPosition + 8, 3, '#ffa723');
-  addText('Selected Menu Items', 40, yPosition + 10, pageWidth - 60, 12, '#333333', true);
   yPosition += 20;
 
+  // Selected Menu Items Section
+  addCircle(35, yPosition + 8, 3, '#ffa723');
+  addText('Selected Menu Items', 45, yPosition + 10, pageWidth - 70, 12, '#333333', true);
+  yPosition += 25;
+
   bookingData.selectedMenuItems.forEach((item: string) => {
-    yPosition = addText(`• ${item}`, 40, yPosition, pageWidth - 60, 10, '#666666');
-    yPosition += 4;
+    yPosition = addText(`• ${item}`, 45, yPosition, pageWidth - 70, 10, '#666666');
+    yPosition += 5;
   });
 
-  yPosition += 15;
+  yPosition += 20;
 
   // Budget Range Section
   if (bookingData.budget) {
-    addCircle(30, yPosition + 8, 3, '#ffa723');
-    addText('Budget Range', 40, yPosition + 10, pageWidth - 60, 12, '#333333', true);
+    addCircle(35, yPosition + 8, 3, '#ffa723');
+    addText('Budget Range', 45, yPosition + 10, pageWidth - 70, 12, '#333333', true);
+    yPosition += 25;
+    yPosition = addText(bookingData.budget.replace('-', ' - ').toUpperCase(), 45, yPosition, pageWidth - 70, 10, '#666666');
     yPosition += 20;
-    yPosition = addText(bookingData.budget.replace('-', ' - ').toUpperCase(), 40, yPosition, pageWidth - 60, 10, '#666666');
-    yPosition += 15;
   }
 
   // Special Requirements Section
   if (bookingData.specialRequirements) {
-    addCircle(30, yPosition + 8, 3, '#ffa723');
-    addText('Special Requirements', 40, yPosition + 10, pageWidth - 60, 12, '#333333', true);
+    addCircle(35, yPosition + 8, 3, '#ffa723');
+    addText('Special Requirements', 45, yPosition + 10, pageWidth - 70, 12, '#333333', true);
+    yPosition += 25;
+    yPosition = addText(bookingData.specialRequirements, 45, yPosition, pageWidth - 70, 10, '#666666');
     yPosition += 20;
-    yPosition = addText(bookingData.specialRequirements, 40, yPosition, pageWidth - 60, 10, '#666666');
-    yPosition += 15;
   }
 
   // Footer Notes
-  yPosition = pageHeight - 30;
+  yPosition = pageHeight - 40;
   addText('Confirmation emails sent to you and our team', pageWidth / 2, yPosition, pageWidth - 40, 8, '#666666', false, 'center');
   addText('Booking valid for 7 days from confirmation', pageWidth / 2, yPosition + 5, pageWidth - 40, 8, '#666666', false, 'center');
 
